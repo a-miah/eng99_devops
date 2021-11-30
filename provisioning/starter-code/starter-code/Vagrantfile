@@ -1,0 +1,33 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.network "private_network", ip: "192.168.10.100"
+
+  # syncing folders from local machine into the VM
+  config.vm.synced_folder ".", "/home/vagrant/app"
+  
+  # Automating all the steps - using provision.sh
+  config.vm.provision "shell", path: "environment/provision.sh"
+
+  # This is how to do it manually on the same file itself
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   # sudo apt-get update -y
+  #   # sudo apt-get upgrade -y
+  #   # sudo apt-get install nginx -y
+  #   # sudo systemctl enable nginx  
+  #   # sudo apt-get install python-software-properties -y
+  #   # curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  #   # sudo apt-get install -y nodejs
+  #   # sudo npm install pm2 -g
+  #   # npm install
+  #   # npm start
+  # SHELL
+
+
+end
+
+
+# Dependencies - other required terminal commands
+# gem install bundler 
+# bundler
+# rake spec - checks if tests passing
